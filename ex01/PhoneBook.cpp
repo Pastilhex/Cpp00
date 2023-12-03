@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:15:01 by ialves-m          #+#    #+#             */
-/*   Updated: 2023/12/01 14:48:45 by ialves-m         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:12:44 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,52 +26,69 @@ void	menu(void)
 void	optionAdd(std::string arg, PhoneBook* myPhoneBook, int currentRegistry, int* registryNumber)
 {
 	std::cout << std::endl;
-	std::cout << "  Enter your first name: ";
-	std::getline(std::cin, arg);
-	if (!arg.empty())
-		myPhoneBook->contacts[currentRegistry].setFirstName(arg);
-	else
-		myPhoneBook->contacts[currentRegistry].emptyDetected = 1;
-	std::cout << "  Enter your last name: ";
-	std::getline(std::cin, arg);
-	if (!arg.empty())
-		myPhoneBook->contacts[currentRegistry].setLastName(arg);
-	else
-		myPhoneBook->contacts[currentRegistry].emptyDetected = 1;
-	std::cout << "  Enter your nickname: ";
-	std::getline(std::cin, arg);
-	if (!arg.empty())
-		myPhoneBook->contacts[currentRegistry].setNickname(arg);
-	else
-		myPhoneBook->contacts[currentRegistry].emptyDetected = 1;
-	std::cout << "  Enter your phone number: ";
-	std::getline(std::cin, arg);
-	if (!arg.empty())
-		myPhoneBook->contacts[currentRegistry].setPhoneNumber(arg);
-	else
-		myPhoneBook->contacts[currentRegistry].emptyDetected = 1;
-	std::cout << "  Enter your darkest secret: ";
-	std::getline(std::cin, arg);
-	if (!arg.empty())
-		myPhoneBook->contacts[currentRegistry].setDarkestSecret(arg);
-	else
-		myPhoneBook->contacts[currentRegistry].emptyDetected = 1;
-	if (myPhoneBook->contacts[currentRegistry].emptyDetected == 0)
-		(*registryNumber)++;
+
+	do {
+		std::cout << " Enter your first name: ";
+		std::getline(std::cin, arg);
+	} while (arg.empty());
+	myPhoneBook->contacts[currentRegistry].setFirstName(arg);
+
+	do {
+		std::cout << " Enter your last name: ";
+		std::getline(std::cin, arg);
+	} while (arg.empty());
+	myPhoneBook->contacts[currentRegistry].setLastName(arg);
+
+	do {
+		std::cout << " Enter your nickname: ";
+		std::getline(std::cin, arg);
+	} while (arg.empty());
+	myPhoneBook->contacts[currentRegistry].setNickname(arg);
+
+	do {
+		std::cout << " Enter your phone number: ";
+		std::getline(std::cin, arg);
+	} while (arg.empty());
+	myPhoneBook->contacts[currentRegistry].setPhoneNumber(arg);
+
+	do {
+		std::cout << " Enter your darkest secret: ";
+		std::getline(std::cin, arg);
+	} while (arg.empty());
+	myPhoneBook->contacts[currentRegistry].setDarkestSecret(arg);
+	(*registryNumber)++;
 }
 
-void	drawHeader(){
+void	drawHeader()
+{
 	std::cout << "+------------+------------+------------+------------+" << std::endl;
 	std::cout << "|   Index    | First Name | Last  Name |  Nickname  |" << std::endl;
 	std::cout << "+------------+------------+------------+------------+" << std::endl;
 }
 
-int		countRecords(PhoneBook* myPhoneBook){
+int		countRecords(PhoneBook* myPhoneBook)
+{
 	int nbr = 0;
 	for (int i = 0; i < 8; i++)
 		if (!myPhoneBook->contacts[i].getFirstName().empty())
 			nbr++;
 	return (nbr);
+}
+
+int		countChars(PhoneBook* myPhoneBook, int i)
+{
+	int	size = 0;
+	if (myPhoneBook->contacts[i].getFirstName().length() > size)
+		size = myPhoneBook->contacts[i].getFirstName().length();
+	if (myPhoneBook->contacts[i].getLastName().length() > size)
+		size = myPhoneBook->contacts[i].getLastName().length();
+	if (myPhoneBook->contacts[i].getNickname().length() > size)
+		size = myPhoneBook->contacts[i].getNickname().length();
+	if (myPhoneBook->contacts[i].getPhoneNumber().length() > size)
+		size = myPhoneBook->contacts[i].getPhoneNumber().length();
+	if (myPhoneBook->contacts[i].getDarkestSecret().length() > size)
+		size = myPhoneBook->contacts[i].getDarkestSecret().length();
+	return (size);
 }
 
 void	optionSearch(PhoneBook* myPhoneBook)
@@ -104,77 +121,37 @@ void	optionSearch(PhoneBook* myPhoneBook)
 		std::cout << " | " << std::setw(10) << std::right << stringTmp;
 		std::cout << " |" << std::endl;
 	}
-	std::cout << "+------------+------------+------------+------------+" << std::endl;
+	std::cout << "+------------+------------+------------+------------+\n" << std::endl;
 }
 
-void	viewContact(PhoneBook* myPhoneBook, int index){
+void	viewContact(PhoneBook* myPhoneBook, int index)
+{
 	std::string stringTmp;
 	menu();
-	drawHeader();
-	std::cout << "| " << std::setw(10) << std::right << index + 1;
+	int hyphen = countChars(myPhoneBook, index);
+	std::cout << "+ ------------";
+	for (int i = 0; i < hyphen; i++)
+		std::cout << "-";
+	std::cout << " + " << std::endl;
+	std::cout << "| View Contact " << std::setw(16 + hyphen - 14) << std::right << " | " << std::endl;
+	std::cout << "+ ------------";
+	for (int i = 0; i < hyphen; i++)
+		std::cout << "-";
+	std::cout << " + " << std::endl;
+	std::cout << "| Index: " << std::setw(16 + hyphen - 11) << std::left << index + 1 << " | " << std::endl;
 	stringTmp = myPhoneBook->contacts[index].getFirstName();
-	if (myPhoneBook->contacts[index].getFirstName().length() > 10)
-	{
-		stringTmp.resize(9);
-		stringTmp += ".";
-	}
-	std::cout << " | " << std::setw(10) << std::right << stringTmp;
+	std::cout << "| First Name: " << std::setw(16 + hyphen - 16) << std::left << stringTmp << " | " << std::endl;
 	stringTmp = myPhoneBook->contacts[index].getLastName();
-	if (myPhoneBook->contacts[index].getLastName().length() > 10)
-	{
-		stringTmp.resize(9);
-		stringTmp += ".";
-	}
-	std::cout << " | " << std::setw(10) << std::right << stringTmp;
+	std::cout << "| Last Name: " << std::setw(16 + hyphen - 15) << std::left << stringTmp << " | " << std::endl;
 	stringTmp = myPhoneBook->contacts[index].getNickname();
-	if (myPhoneBook->contacts[index].getNickname().length() > 10)
-	{
-		stringTmp.resize(9);
-		stringTmp += ".";
-	}
-	std::cout << " | " << std::setw(10) << std::right << stringTmp;
-	std::cout << " |" << std::endl;
-	std::cout << "+------------+------------+------------+------------+" << std::endl;
-	std::cout << " Press enter to continue." << std::endl;
-	std::cin.get();
-}
-
-int main(void)
-{
-	std::string option;
-	std::string arg;
-	int	registryNumber = 0;
-	PhoneBook myPhoneBook;
+	std::cout << "| Nickname: " << std::setw(16 + hyphen - 14) << std::left << stringTmp << " | " << std::endl;
+	std::cout << "+ ------------";
+	for (int i = 0; i < hyphen; i++)
+		std::cout << "-";
+	std::cout << " + \n" << std::endl;
+	std::string input;
 	do {
-		int currentRegistry = registryNumber % 8;
-		menu();
-		if (myPhoneBook.contacts[currentRegistry].emptyDetected == 1){
-			std::cout << " All fields required!" << std::endl;
-			std::cout << " Choose option > ";
-		}
-		else
-			std::cout << " Choose option > ";
-		std::getline(std::cin, option);
-		myPhoneBook.contacts[currentRegistry].emptyDetected = 0;
-		if (option == "ADD"){
-			optionAdd(arg, &myPhoneBook, currentRegistry, &registryNumber);
-		}
-		else if (option == "SEARCH"){
-			std::string tmp = std::to_string(countRecords(&myPhoneBook));
-			do {
-				menu();
-				optionSearch(&myPhoneBook);
-				if (tmp > "0")
-				{
-					std::cout << "> Choose from index 1 to " << tmp << " to view Contact" << std::endl;
-					std::cout << "> Press any other key to continue: ";	
-				}
-				else
-					std::cout << "> Press any key to continue: ";	
-				std::getline(std::cin, option);
-				if (option >= "1" && option <= tmp)
-					viewContact(&myPhoneBook, std::stoi(option) - 1);
-			} while (option >= "1" && option <= tmp);
-		}
-	} while (option != "EXIT");
+		std::cout << "* Press ENTER to go back to SEARCH. ";
+		std::getline(std::cin, input);
+	} while (input.length() != 0);
 }

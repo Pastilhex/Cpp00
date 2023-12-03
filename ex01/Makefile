@@ -1,4 +1,4 @@
-SRC = PhoneBook.cpp Contact.cpp
+SRC = PhoneBook.cpp Contact.cpp main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

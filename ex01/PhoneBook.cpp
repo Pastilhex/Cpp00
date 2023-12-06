@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:15:01 by ialves-m          #+#    #+#             */
-/*   Updated: 2023/12/06 14:22:58 by ialves-m         ###   ########.fr       */
+/*   Updated: 2023/12/06 15:18:44 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,39 @@ void	optionAdd(std::string arg, PhoneBook* myPhoneBook, int currentRegistry, int
 	do {
 		std::cout << " Enter your first name: ";
 		std::getline(std::cin, arg);
+		if (std::cin.eof())
+			exit(130);
 	} while (arg.empty());
 	myPhoneBook->contacts[currentRegistry].setFirstName(arg);
 
 	do {
 		std::cout << " Enter your last name: ";
 		std::getline(std::cin, arg);
-	} while (arg.empty());
+		if (std::cin.eof())
+			exit(130);	} while (arg.empty());
 	myPhoneBook->contacts[currentRegistry].setLastName(arg);
 
 	do {
 		std::cout << " Enter your nickname: ";
 		std::getline(std::cin, arg);
+		if (std::cin.eof())
+			exit(130);
 	} while (arg.empty());
 	myPhoneBook->contacts[currentRegistry].setNickname(arg);
 
 	do {
 		std::cout << " Enter your phone number: ";
 		std::getline(std::cin, arg);
+		if (std::cin.eof())
+			exit(130);
 	} while (arg.empty());
 	myPhoneBook->contacts[currentRegistry].setPhoneNumber(arg);
 
 	do {
 		std::cout << " Enter your darkest secret: ";
 		std::getline(std::cin, arg);
+		if (std::cin.eof())
+			exit(130);
 	} while (arg.empty());
 	myPhoneBook->contacts[currentRegistry].setDarkestSecret(arg);
 	(*registryNumber)++;

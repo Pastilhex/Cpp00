@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:26:33 by ialves-m          #+#    #+#             */
-/*   Updated: 2023/12/03 19:12:01 by ialves-m         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:26:01 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int main(void)
 		menu();
 		std::cout << "* Choose option > ";
 		std::getline(std::cin, option);
+		if (std::cin.eof())
+			break;
 		if (option == "ADD"){
 			optionAdd(arg, &myPhoneBook, currentRegistry, &registryNumber);
 		}
@@ -40,6 +42,8 @@ int main(void)
 				else
 					std::cout << "* No records to display. Choose 0 to go back to MENU. ";	
 				std::getline(std::cin, option);
+				if (std::cin.eof())
+					exit(130);
 				if (option >= "1" && option <= tmp)
 					viewContact(&myPhoneBook, std::stoi(option) - 1);
 			} while ((option >= "1" && option <= tmp) || option != "0");

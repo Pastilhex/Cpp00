@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 12:15:01 by ialves-m          #+#    #+#             */
-/*   Updated: 2023/12/03 19:12:44 by ialves-m         ###   ########.fr       */
+/*   Updated: 2023/12/06 14:22:58 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,7 @@ void	viewContact(PhoneBook* myPhoneBook, int index)
 	do {
 		std::cout << "* Press ENTER to go back to SEARCH. ";
 		std::getline(std::cin, input);
+		if (std::cin.eof())
+			exit(130);
 	} while (input.length() != 0);
 }
